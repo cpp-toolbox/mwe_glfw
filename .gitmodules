@@ -1,0 +1,6 @@
+[submodule "external_libraries/glad_opengl_3.3_core"]
+	path = external_libraries/glad_opengl_3.3_core
+	url = git@github.com:opengl-toolbox/glad_opengl_3.3_core.git
+[submodule "external_libraries/glfw"]
+	path = external_libraries/glfw
+	url = git@github.com:glfw/glfw.git
