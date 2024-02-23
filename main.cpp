@@ -65,11 +65,11 @@ GLFWwindow* initialize_glfw_and_return_window() {
 
 }
 
-struct opengl_drawing_data {
+struct OpenGLDrawingData {
     GLuint vbo_name; GLuint ibo_name; GLuint vao_name;
 };
 
-opengl_drawing_data prepare_drawing_data_and_opengl_drawing_data() {
+OpenGLDrawingData prepare_drawing_data_and_opengl_drawing_data() {
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
