@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(mwe_glfw)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 add_executable(mwe_glfw main.cpp)
 
 # GLAD: opengl function loader
