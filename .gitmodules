@@ -4,3 +4,9 @@
 [submodule "external_libraries/glfw"]
 	path = external_libraries/glfw
 	url = git@github.com:glfw/glfw.git
+[submodule "src/window"]
+	path = src/window
+	url = git@github.com:cpp-toolbox/window.git
+[submodule "clang_formatting"]
+	path = clang_formatting
+	url = git@github.com:cpp-toolbox/clang_formatting.git

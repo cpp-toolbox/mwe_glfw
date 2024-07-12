@@ -1,23 +1,14 @@
 cmake_minimum_required(VERSION 3.10)
-
 project(mwe_glfw)
+
+# Specify the C++ standard
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(mwe_glfw main.cpp)
+add_executable(mwe_glfw src/main.cpp src/window/window.cpp)
 
-# GLAD: opengl function loader
-
-include_directories(external_libraries/glad_opengl_3.3_core/include)
-add_subdirectory(external_libraries/glad_opengl_3.3_core)
-
-# GLFW: opengl framework
-
-# disable unnessary steps in build
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-
-add_subdirectory(external_libraries/glfw)
-
-target_link_libraries(mwe_glfw glfw glad)
+find_package(glad)
+find_package(glfw3)
+target_link_libraries(${PROJECT_NAME} glad::glad glfw)
