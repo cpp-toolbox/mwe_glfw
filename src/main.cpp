@@ -1,4 +1,5 @@
 #include <glad/glad.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "window/window.hpp"
 
@@ -146,11 +147,8 @@ GLuint create_shader_program() {
 
 int main() {
 
-    LiveInputState live_input_state;
-
-    GLFWwindow *window = initialize_glfw_glad_and_return_window(&SCREEN_WIDTH, &SCREEN_HEIGHT, "glfw window", false,
-                                                                false, false, &live_input_state);
-
+    GLFWwindow *window = initialize_glfw_glad_and_return_window(SCREEN_WIDTH, SCREEN_HEIGHT, "glfw window", false,
+                                                                false, false);
     auto [vbo_name, ibo_name, vao_name] = prepare_drawing_data_and_opengl_drawing_data();
     GLuint shader_program = create_shader_program();
 
@@ -162,7 +160,7 @@ int main() {
 
         glViewport(0, 0, width, height);
 
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // draw our first triangle
         glUseProgram(shader_program);
