@@ -1,4 +1,5 @@
 [requires]
+glm/1.0.1
 fmt/11.2.0
 spdlog/1.15.3
 glad/0.1.36

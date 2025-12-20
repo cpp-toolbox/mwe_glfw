@@ -16,8 +16,10 @@ foreach(_source ${SOURCES})
     set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${_source})
 endforeach()
 
+
+find_package(glm)
 find_package(spdlog)
 find_package(fmt)
 find_package(glad)
 find_package(glfw3)
-target_link_libraries(${PROJECT_NAME} spdlog::spdlog fmt::fmt glad::glad glfw)
+target_link_libraries(${PROJECT_NAME} glm::glm spdlog::spdlog fmt::fmt glad::glad glfw)

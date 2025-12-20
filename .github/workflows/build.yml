@@ -23,15 +23,6 @@ jobs:
           submodules: recursive
 
       # ----------------------------
-      # Linux: Install system packages
-      # ----------------------------
-      - name: Install system packages (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgl1-mesa-dev libx11-dev
-
-      # ----------------------------
       # Setup Conan
       # ----------------------------
       - name: Install Conan
@@ -41,7 +32,7 @@ jobs:
       # Install dependencies
       # ----------------------------
       - name: conan install packages
-        run: conan install . --build=missing
+        run: conan install . --build=missing -c tools.system.package_manager:mode=install
 
       - name: sbpt initialization
         run: python scripts/sbpt/main.py init src
