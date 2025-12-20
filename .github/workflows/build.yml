@@ -32,7 +32,7 @@ jobs:
       # Install dependencies
       # ----------------------------
       - name: conan install packages
-        run: conan install . --build=missing -c tools.system.package_manager:mode=install
+        run: conan install . --build=missing -c tools.system.package_manager:mode=install -c tools.system.package_manager:sudo=True
 
       - name: sbpt initialization
         run: python scripts/sbpt/main.py init src
@@ -42,8 +42,14 @@ jobs:
       # ----------------------------
       - name: Configure & Build
         run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            echo "Windows using conan-default preset"
+            cmake --preset conan-default
+          else
+            echo "Linux/macOS using conan-release preset"
             cmake --preset conan-release
-            cmake --build --preset conan-release
+          fi
+          cmake --build --preset conan-release
         shell: bash
 
       # ----------------------------
