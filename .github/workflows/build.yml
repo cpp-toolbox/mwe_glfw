@@ -20,7 +20,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          submodules: recursive   # <--- ensures all submodules are cloned
+          submodules: recursive
+
+      # ----------------------------
+      # Linux: Install system packages
+      # ----------------------------
+      - name: Install system packages (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1-mesa-dev libx11-dev
 
       # ----------------------------
       # Setup Conan
@@ -31,22 +40,19 @@ jobs:
       # ----------------------------
       # Install dependencies
       # ----------------------------
-      - name: Conan install
+      - name: conan install packages
         run: conan install . --build=missing
+
+      - name: sbpt initialization
+        run: python scripts/sbpt/main.py init src
 
       # ----------------------------
       # Build
       # ----------------------------
       - name: Configure & Build
         run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            echo "Building on Windows using conan-default preset"
-            cmake --build --preset conan-default
-          else
-            echo "Building on Linux/macOS using conan-release preset"
             cmake --preset conan-release
             cmake --build --preset conan-release
-          fi
         shell: bash
 
       # ----------------------------
