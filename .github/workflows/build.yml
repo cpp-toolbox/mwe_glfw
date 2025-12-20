@@ -1,0 +1,67 @@
+name: Build (Windows / macOS / Linux)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      # ----------------------------
+      # Checkout
+      # ----------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive   # <--- ensures all submodules are cloned
+
+      # ----------------------------
+      # Setup Conan
+      # ----------------------------
+      - name: Setup Conan
+        uses: conan-io/setup-conan@v1
+        with:
+          version: latest
+          cache_packages: true
+          profile_detect: true
+          audit_token: ${{ secrets.CONAN_AUDIT_TOKEN }}
+          # Optional: config URLs
+          # config_urls: |
+          #   https://github.com/<org>/conan-config.git
+
+      # ----------------------------
+      # Install dependencies
+      # ----------------------------
+      - name: Conan install
+        run: conan install . --build=missing
+
+      # ----------------------------
+      # Build
+      # ----------------------------
+      - name: Configure & Build
+        run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            echo "Building on Windows using conan-default preset"
+            cmake --build --preset conan-default
+          else
+            echo "Building on Linux/macOS using conan-release preset"
+            cmake --preset conan-release
+            cmake --build --preset conan-release
+          fi
+        shell: bash
+
+      # ----------------------------
+      # Upload artifact
+      # ----------------------------
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.os }}
+          path: build/Release/
