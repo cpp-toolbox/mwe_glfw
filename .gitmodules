@@ -4,3 +4,12 @@
 [submodule "scripts"]
 	path = scripts
 	url = git@github.com:cpp-toolbox/scripts.git
+[submodule "src/utility/logger"]
+	path = src/utility/logger
+	url = git@github.com:cpp-toolbox/logger.git
+[submodule "src/utility/lazy_construction"]
+	path = src/utility/lazy_construction
+	url = git@github.com:cpp-toolbox/lazy_construction.git
+[submodule "src/utility/math_utils"]
+	path = src/utility/math_utils
+	url = git@github.com:cpp-toolbox/math_utils.git

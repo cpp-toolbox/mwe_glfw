@@ -147,16 +147,19 @@ GLuint create_shader_program() {
 
 int main() {
 
-    GLFWwindow *window = initialize_glfw_glad_and_return_window(SCREEN_WIDTH, SCREEN_HEIGHT, "glfw window", false,
-                                                                false, false);
+    Window window;
+    window.move_center_of_window_to_normalized(0, 0);
+
+    GLFWwindow *glfw_window = window.glfw_window;
+
     auto [vbo_name, ibo_name, vao_name] = prepare_drawing_data_and_opengl_drawing_data();
     GLuint shader_program = create_shader_program();
 
     int width, height;
 
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(glfw_window)) {
 
-        glfwGetFramebufferSize(window, &width, &height);
+        glfwGetFramebufferSize(glfw_window, &width, &height);
 
         glViewport(0, 0, width, height);
 
@@ -169,11 +172,11 @@ int main() {
                                      // so to keep things a bit more organized
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(glfw_window);
         glfwPollEvents();
     }
 
-    glfwDestroyWindow(window);
+    glfwDestroyWindow(glfw_window);
 
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
