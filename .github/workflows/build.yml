@@ -19,6 +19,9 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Install Conan
+        uses: conan-io/setup-conan@v1
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
