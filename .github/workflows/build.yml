@@ -41,8 +41,9 @@ jobs:
 
       - name: Find zip file
         id: zip
+        shell: bash
         run: |
-          python scripts/project_packager.py gha_zip_file_name>> $GITHUB_OUTPUT
+          python scripts/project_packager.py gha_zip_file_name >> $GITHUB_OUTPUT
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
