@@ -24,6 +24,11 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Install Python requirements
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r scripts/go/requirements.txt
+
       - name: Build project
         run: python scripts/go/main.py -y
 
