@@ -38,7 +38,14 @@ jobs:
       - name: Package build
         run: python scripts/project_packager.py package
 
+      - name: Find zip file
+        id: zip
+        run: |
+          zip_file=$(ls *.zip | head -n 1)
+          echo "zip_file=$zip_file" >> $GITHUB_OUTPUT
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          path: "*.zip"
+          name: ${{ steps.zip.outputs.zip_file }}
+          path: ${{ steps.zip.outputs.zip_file }}
