@@ -14,49 +14,24 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      # ----------------------------
-      # Checkout
-      # ----------------------------
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      # ----------------------------
-      # Setup Conan
-      # ----------------------------
-      - name: Install Conan
-        uses: conan-io/setup-conan@v1
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
 
-      # ----------------------------
-      # Install dependencies
-      # ----------------------------
-      - name: conan install packages
-        run: conan install . --build=missing -c tools.system.package_manager:mode=install -c tools.system.package_manager:sudo=True
+      - name: Build project
+        run: python scripts/go/main.py -y
 
-      - name: sbpt initialization
-        run: python scripts/sbpt/main.py init src
+      - name: Package build
+        run: python scripts/project_packager.py package
 
-      # ----------------------------
-      # Build
-      # ----------------------------
-      - name: Configure & Build
-        run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            echo "Windows using conan-default preset"
-            cmake --preset conan-default
-          else
-            echo "Linux/macOS using conan-release preset"
-            cmake --preset conan-release
-          fi
-          cmake --build --preset conan-release
-        shell: bash
-
-      # ----------------------------
-      # Upload artifact
-      # ----------------------------
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: build-${{ matrix.os }}
-          path: build/Release/
+          name: packaged-${{ matrix.os }}
+          path: "*.zip"

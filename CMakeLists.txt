@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 project(mwe_glfw)
 
-# Specify the C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
@@ -16,7 +15,7 @@ foreach(_source ${SOURCES})
     set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${_source})
 endforeach()
 
-
+# automatically generated from conan install
 find_package(glm)
 find_package(spdlog)
 find_package(fmt)
